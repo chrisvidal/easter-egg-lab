@@ -7,9 +7,10 @@ import { sanitizeReveal, showReveal } from './reveal.js';
 import { fr } from './typo.js';
 import { getUnlocked, handleReset, saveUnlocked } from './unlocked.js';
 
-export function messageFor(result) {
+// `miss` : texte affiché quand le serveur refuse sans donner d'indice.
+export function messageFor(result, miss = '') {
   if (result.ok) return '';
-  if (result.kind === 'rejected') return result.hint ?? '';
+  if (result.kind === 'rejected') return result.hint ?? miss;
   if (result.kind === 'rate_limited') return MESSAGES.rateLimited;
   return MESSAGES.unreachable;
 }
@@ -28,7 +29,7 @@ function observeOnce(target, callback) {
   observer.observe(target);
 }
 
-export function setupEgg(mechanic, { marks = [] } = {}) {
+export function setupEgg(mechanic, { marks = [], miss = '' } = {}) {
   handleReset();
   mountDebug();
   const { hintEl } = mountLayout({ mechanic, marks });
@@ -74,7 +75,7 @@ export function setupEgg(mechanic, { marks = [] } = {}) {
           showReveal(reveal, { container: revealBox });
         }
       } else {
-        setStatus(messageFor(result));
+        setStatus(messageFor(result, miss));
       }
       return result;
     },

@@ -25,8 +25,9 @@
       </div>
       <p class="readout" id="readout" data-readout></p>
       <button type="button" class="here" data-here>Ici.</button>
+      <p class="or" aria-hidden="true">ou</p>
       <form class="latlng" data-latlng-form novalidate>
-        <label for="latlng">lat, lng</label>
+        <label for="latlng"><span class="visually-hidden">Ou bien, saisir des coordonnées : </span>lat, lng</label>
         <input id="latlng" name="latlng" type="text" inputmode="text" autocomplete="off" spellcheck="false" placeholder="0.00, 0.00">
         <button type="submit">Envoyer</button>
       </form>

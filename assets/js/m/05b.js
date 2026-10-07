@@ -50,8 +50,11 @@ export function parseLatLng(input) {
   return { lat, lng };
 }
 
+// Même format que le champ « lat, lng » : nombres signés (sud et ouest négatifs).
 export function formatCoordinate({ lat, lng }) {
-  const ns = lat >= 0 ? 'N' : 'S';
-  const ew = lng >= 0 ? 'E' : 'O';
-  return `${Math.abs(lat).toFixed(2)}° ${ns} · ${Math.abs(lng).toFixed(2)}° ${ew}`;
+  const fixed = (value) => {
+    const text = value.toFixed(2);
+    return text === '-0.00' ? '0.00' : text;
+  };
+  return `${fixed(lat)}, ${fixed(lng)}`;
 }

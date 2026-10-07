@@ -54,7 +54,10 @@ test('saisie « lat, lng »', () => {
   assert.equal(parseLatLng('1, 2, 3'), null);
 });
 
-test('affichage lisible', () => {
-  assert.equal(formatCoordinate({ lat: -12.5, lng: 3 }), '12.50° S · 3.00° E');
-  assert.equal(formatCoordinate({ lat: 1, lng: -20 }), '1.00° N · 20.00° O');
+test('affichage au format du champ « lat, lng » (signé)', () => {
+  assert.equal(formatCoordinate({ lat: -12.5, lng: 3 }), '-12.50, 3.00');
+  assert.equal(formatCoordinate({ lat: 1, lng: -20 }), '1.00, -20.00');
+  assert.equal(formatCoordinate({ lat: -0.001, lng: 0 }), '0.00, 0.00');
+  const shown = formatCoordinate({ lat: 44.123, lng: -1.5 });
+  assert.deepEqual(parseLatLng(shown), { lat: 44.12, lng: -1.5 }, 'recopiable tel quel dans le champ');
 });

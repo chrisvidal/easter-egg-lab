@@ -459,6 +459,35 @@ a {
   border-color: var(--blanc-doux);
 }
 
+.or {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  width: min(16rem, 70vw);
+  margin: 0 0 1.25rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--blanc-pale);
+}
+
+.or::before,
+.or::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--trait);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
 .latlng {
   display: flex;
   flex-wrap: wrap;

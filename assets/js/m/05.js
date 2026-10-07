@@ -11,7 +11,7 @@ import {
 
 const KEY_STEP = 4;
 
-const egg = setupEgg('coordinate');
+const egg = setupEgg('coordinate', { miss: 'Pas ici.' });
 const stage = document.querySelector('[data-globe]');
 const canvas = stage.querySelector('canvas');
 const readout = document.querySelector('[data-readout]');
