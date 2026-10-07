@@ -124,15 +124,6 @@ a {
   color: var(--blanc-doux);
 }
 
-.hint-06 {
-  font-family: var(--mono);
-  font-style: normal;
-  font-size: 0.6rem;
-  letter-spacing: 0.2em;
-  color: var(--blanc-pale);
-  opacity: 0.6;
-}
-
 .egg-nav ul {
   display: flex;
   flex-wrap: wrap;

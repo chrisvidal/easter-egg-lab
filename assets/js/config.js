@@ -58,7 +58,7 @@ export const HINTS = {
   letters: 'Cinq lettres dorment dans ce texte. Réveille-les dans l’ordre de celui qui porte le monde.',
   longpress: 'Qui porte le monde ne le lâche pas.',
   coordinate: 'Persée lui montra la Méduse. Il devint montagne. Trouve-le.',
-  console: 'F12',
+  console: 'L’envers s’ouvre par les outils du développeur.',
   overscroll: 'Le monde a un bord. Pousse.',
 };
 
