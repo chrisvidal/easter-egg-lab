@@ -362,10 +362,6 @@ a {
   height: 100%;
 }
 
-.globe-a {
-  cursor: pointer;
-}
-
 .ring {
   position: absolute;
   inset: -6%;
