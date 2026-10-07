@@ -96,20 +96,20 @@ Autres seuils à régler côté serveur : `longpress` ≥ 5000 ms (le front envo
 À ajouter dans `EASTER_EGG_ALLOWED_ORIGINS` (Laravel) :
 
 ```
-http://localhost:8765,https://<user>.github.io
+http://localhost:8765,https://chrisvidal.github.io
 ```
 
-Une origine n'a **pas** de chemin : pour `https://<user>.github.io/<repo>/`, l'origine est `https://<user>.github.io`.
+Une origine n'a **pas** de chemin : pour `https://chrisvidal.github.io/easter-egg-lab/`, l'origine est `https://chrisvidal.github.io`.
 
 Les events partent par défaut en `fetch` keepalive sans credentials, ce qui fonctionne avec la configuration CORS actuelle (`Access-Control-Allow-Origin: *`). Pour passer à `navigator.sendBeacon` (`EVENT_TRANSPORT = 'beacon'` dans `config.js`), l'API doit répondre avec l'origine exacte **et** `Access-Control-Allow-Credentials: true` (`supports_credentials => true` dans `config/cors.php`). Sinon, chaque event échoue en CORS et laisse une erreur en console. Voir `DECISIONS.md`.
 
-## Mise en ligne sur GitHub Pages (à faire manuellement)
+## Mise en ligne sur GitHub Pages
 
-1. Créer un dépôt sur GitHub, par exemple `ombres-easter-egg-lab`. Rien n'a été poussé.
-2. `git remote add origin git@github.com:<user>/ombres-easter-egg-lab.git && git push -u origin main`
-3. Dans le dépôt : **Settings → Pages → Build and deployment → Source : Deploy from a branch**, branche `main`, dossier `/ (root)`.
-4. Attendre le déploiement, puis ouvrir `https://<user>.github.io/ombres-easter-egg-lab/`.
-5. Côté Laravel, ajouter `https://<user>.github.io` à `EASTER_EGG_ALLOWED_ORIGINS`, puis redéployer ou vider le cache de config.
-6. Vérifier avec `?debug=1` que `page_view` et `unlock` répondent bien.
+Dépôt : https://github.com/chrisvidal/easter-egg-lab (branche `main`, déjà poussée).
+
+1. Dans le dépôt : **Settings → Pages → Build and deployment → Source : Deploy from a branch**, branche `main`, dossier `/ (root)`.
+2. Attendre le déploiement, puis ouvrir `https://chrisvidal.github.io/easter-egg-lab/`.
+3. Côté Laravel, ajouter `https://chrisvidal.github.io` à `EASTER_EGG_ALLOWED_ORIGINS`, puis redéployer ou vider le cache de config.
+4. Vérifier avec `?debug=1` que `page_view` et `unlock` répondent bien.
 
 Le fichier `.nojekyll` désactive Jekyll. Tous les chemins sont relatifs : le site fonctionne depuis un sous-chemin.
