@@ -1,0 +1,10 @@
+{
+  "name": "ombres-easter-egg-lab",
+  "private": true,
+  "type": "module",
+  "description": "•OMBRES — Easter Egg Lab (site statique, sans build).",
+  "scripts": {
+    "test": "node --test tests/",
+    "serve": "php -S localhost:8765 -t ."
+  }
+}
