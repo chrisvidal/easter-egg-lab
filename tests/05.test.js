@@ -7,7 +7,7 @@ import {
   normalizeLongitude,
   parseLatLng,
   rotationFor,
-} from '../assets/js/eggs/coordinate-math.js';
+} from '../assets/js/m/05b.js';
 
 test('le réticule pointe l’inverse de la rotation (convention d3-geo)', () => {
   assert.deepEqual(coordinateUnderReticle([0, 0, 0]), { lat: 0, lng: 0 });

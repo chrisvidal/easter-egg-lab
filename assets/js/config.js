@@ -26,31 +26,31 @@ export const EGGS = {
     number: '03',
     title: 'Les lettres endormies',
     mood: 'Certaines lettres veillent plus tard que les autres.',
-    page: 'eggs/letters.html',
+    page: 'p/03.html',
   },
   longpress: {
     number: '04',
     title: 'Le poids du monde',
     mood: 'Il tourne sans fin. Il attend qu’on le retienne.',
-    page: 'eggs/longpress.html',
+    page: 'p/04.html',
   },
   coordinate: {
     number: '05',
     title: 'Là où le Titan fut changé en pierre',
     mood: 'Une montagne se souvient d’un regard.',
-    page: 'eggs/coordinate.html',
+    page: 'p/05.html',
   },
   console: {
     number: '06',
     title: 'L’envers',
     mood: 'Chaque décor a un dos.',
-    page: 'eggs/console.html',
+    page: 'p/06.html',
   },
   overscroll: {
     number: '10',
     title: 'Le bord du monde',
     mood: 'Tout finit quelque part. Presque tout.',
-    page: 'eggs/overscroll.html',
+    page: 'p/10.html',
   },
 };
 

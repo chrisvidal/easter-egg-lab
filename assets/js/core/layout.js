@@ -25,10 +25,10 @@ function rootPath() {
   return document.body.dataset.root || '.';
 }
 
-// Position d'une lettre : i-ème caractère de la première occurrence de `word`.
-export function locate(text, word, i) {
-  const index = text.indexOf(word);
-  return index < 0 || i < 0 || i >= word.length ? -1 : index + i;
+// i-ème caractère de la première occurrence de `w`.
+export function locate(text, w, i) {
+  const index = text.indexOf(w);
+  return index < 0 || i < 0 || i >= w.length ? -1 : index + i;
 }
 
 export function renderTextA(container, marks = []) {
@@ -38,15 +38,15 @@ export function renderTextA(container, marks = []) {
     const para = el('p');
     const cuts = marks
       .filter((mark) => mark.p === p)
-      .map((mark) => ({ ...mark, at: locate(text, mark.word, mark.i) }))
+      .map((mark) => ({ ...mark, at: locate(text, mark.w, mark.i) }))
       .filter((mark) => mark.at >= 0)
       .sort((a, b) => a.at - b.at);
     let cursor = 0;
     for (const cut of cuts) {
       para.append(text.slice(cursor, cut.at));
-      const glyph = el('span', {}, text[cut.at]);
-      glyph.dataset.glyph = cut.id;
-      para.append(glyph);
+      const node = el('span', {}, text[cut.at]);
+      node.dataset.k = cut.id;
+      para.append(node);
       cursor = cut.at + 1;
     }
     para.append(text.slice(cursor));
@@ -73,7 +73,7 @@ function renderFooter(container, mechanic) {
   let hintEl = null;
 
   if (mechanic && HINTS[mechanic]) {
-    hintEl = el('p', { class: `hint hint-${mechanic}`, id: 'indice' }, fr(HINTS[mechanic]));
+    hintEl = el('p', { class: `hint hint-${EGGS[mechanic].number}`, id: 'indice' }, fr(HINTS[mechanic]));
     nodes.push(hintEl);
   }
 

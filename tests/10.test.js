@@ -1,15 +1,15 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import {
-  MAX_STRETCH_PX,
-  PUSH_GAP_MS,
-  createOverscroll,
-  dampen,
-  isComplete,
-  push,
-  release,
-  wheelPixels,
-} from '../assets/js/eggs/overscroll-logic.js';
+  M as MAX_STRETCH_PX,
+  G as PUSH_GAP_MS,
+  init as createOverscroll,
+  ease as dampen,
+  done as isComplete,
+  step as push,
+  reset as release,
+  px as wheelPixels,
+} from '../assets/js/m/10b.js';
 
 function burst(state, start, deltas, step = 16) {
   return deltas.reduce((s, delta, i) => push(s, delta, start + i * step), state);
@@ -17,25 +17,25 @@ function burst(state, start, deltas, step = 16) {
 
 test('une rafale continue compte pour une seule poussée', () => {
   const state = burst(createOverscroll(), 0, [40, 40, 40, 40]);
-  assert.equal(state.pushes, 1);
-  assert.equal(state.distance, 160);
-  assert.equal(state.current, 160);
+  assert.equal(state.n, 1);
+  assert.equal(state.d, 160);
+  assert.equal(state.c, 160);
 });
 
 test('une pause plus longue que le seuil ouvre une nouvelle poussée', () => {
   let state = burst(createOverscroll(), 0, [100, 100]);
   state = burst(state, 16 + PUSH_GAP_MS + 1, [100]);
-  assert.equal(state.pushes, 2);
-  assert.equal(state.current, 100, 'l’étirement repart de zéro');
-  assert.equal(state.distance, 300);
+  assert.equal(state.n, 2);
+  assert.equal(state.c, 100, 'l’étirement repart de zéro');
+  assert.equal(state.d, 300);
 });
 
 test('relâcher (touchend) ouvre aussi une nouvelle poussée', () => {
   let state = push(createOverscroll(), 50, 0);
   state = release(state);
-  assert.equal(state.current, 0);
+  assert.equal(state.c, 0);
   state = push(state, 50, 10);
-  assert.equal(state.pushes, 2);
+  assert.equal(state.n, 2);
 });
 
 test('les deltas nuls, négatifs ou non finis sont ignorés', () => {
@@ -49,14 +49,14 @@ test('complet seulement après 3 poussées ET 800 px cumulés', () => {
   assert.equal(isComplete(state), false, '1 poussée, 900 px');
   state = burst(state, 1000, [10]);
   state = burst(state, 2000, [10]);
-  assert.equal(state.pushes, 3);
+  assert.equal(state.n, 3);
   assert.equal(isComplete(state), true);
 
   let short = createOverscroll();
   short = burst(short, 0, [100]);
   short = burst(short, 1000, [100]);
   short = burst(short, 2000, [100]);
-  assert.equal(short.pushes, 3);
+  assert.equal(short.n, 3);
   assert.equal(isComplete(short), false, '3 poussées, 300 px');
 });
 

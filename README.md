@@ -6,11 +6,11 @@ Le site est 100 % statique (GitHub Pages) : HTML, CSS et JavaScript vanilla en E
 
 ```
 index.html               landing du labo (5 cartes)
-eggs/*.html              une page par mécanique
+p/NN.html                une page par mécanique (03, 04, 05, 06, 10)
 assets/css/site.css
 assets/js/config.js      API_BASE, transport des events, textes des indices, CDN
 assets/js/core/          api, session, reveal, unlocked, debug, layout, egg (orchestration), globe, typo
-assets/js/eggs/          une mécanique par fichier + fonctions pures (coordinate-math, overscroll-logic)
+assets/js/m/             une mécanique par fichier (NN.js) + fonctions pures (05b.js, 10b.js)
 tests/                   node --test, aucune dépendance
 ```
 
@@ -37,7 +37,7 @@ node --test tests/
 | `?debug=1` | Ouvre un panneau flottant qui liste chaque appel API (requête et réponse). `?debug=0` le ferme. | `sessionStorage`, valable pour l'onglet |
 | `?reset=1` | Efface la progression (énigmes résolues, reveals mémorisés) et le `session_id`. Le paramètre est ensuite retiré de l'URL. | `localStorage` |
 
-Les paramètres se combinent : `http://localhost:8765/eggs/letters.html?api=http://projet-atlas.test&debug=1&reset=1`
+Les paramètres se combinent : `http://localhost:8765/p/03.html?api=http://projet-atlas.test&debug=1&reset=1`
 
 ### Tester contre l'API Laravel locale
 
@@ -49,11 +49,11 @@ Les paramètres se combinent : `http://localhost:8765/eggs/letters.html?api=http
 
 | # | Page | Mécanique | Desktop | Mobile | Clavier seul |
 |---|---|---|---|---|---|
-| 03 | `eggs/letters.html` | Les lettres endormies : cliquer 5 lettres dans l'ordre | ✅ | ✅ (tap) | ✅ Tab + Entrée/Espace |
-| 04 | `eggs/longpress.html` | Le poids du monde : appui long de 5 s sur le globe | ✅ souris | ✅ doigt | ✅ Espace maintenu (globe focalisé) |
-| 05 | `eggs/coordinate.html` | Là où le Titan fut changé en pierre : orienter le globe, puis « Ici. » | ✅ glisser | ✅ glisser | ✅ flèches (Maj = pas fin) ou champ « lat, lng » |
-| 06 | `eggs/console.html` | L'envers : `atlas.lift('…')` dans la console | ✅ | ❌ la page le dit en une phrase | ✅ (DevTools) |
-| 10 | `eggs/overscroll.html` | Le bord du monde : continuer de pousser en bas de page | ✅ molette / trackpad | ✅ glisser vers le haut | ✅ ↓, Page↓, Fin, Espace en bas de page |
+| 03 | `p/03.html` | Les lettres endormies : cliquer 5 lettres dans l'ordre | ✅ | ✅ (tap) | ✅ Tab + Entrée/Espace |
+| 04 | `p/04.html` | Le poids du monde : appui long de 46 s sur le globe | ✅ souris | ✅ doigt | ✅ Espace maintenu (globe focalisé) |
+| 05 | `p/05.html` | Là où le Titan fut changé en pierre : orienter le globe, puis « Ici. » | ✅ glisser | ✅ glisser | ✅ flèches (Maj = pas fin) ou champ « lat, lng » |
+| 06 | `p/06.html` | L'envers : `atlas.lift('…')` dans la console | ✅ | ❌ la page le dit en une phrase | ✅ (DevTools) |
+| 10 | `p/10.html` | Le bord du monde : continuer de pousser en bas de page | ✅ molette / trackpad | ✅ glisser vers le haut | ✅ ↓, Page↓, Fin, Espace en bas de page |
 
 Chaque page envoie `page_view`, puis `hint_seen` (l'indice entre dans le viewport) et `attempt_started` (premier geste lié à la mécanique). Une mécanique déjà résolue affiche directement son reveal, que l'on peut refermer.
 
@@ -63,7 +63,7 @@ Chaque page envoie `page_view`, puis `hint_seen` (l'indice entre dans le viewpor
 | Mécanique | Solution | Preuve envoyée |
 |---|---|---|
 | letters | Réveiller **A-T-L-A-S** : le « a » de *agiles*, le « t » de *toujours*, le « L » de *Libres*, le « a » de *activons*, le « S » de *Samsung* | `{"sequence":["g3","g7","g1","g9","g4"]}` |
-| longpress | Maintenir le globe au moins 5 s sans relâcher | `{"duration_ms": 5000+}` |
+| longpress | Maintenir le globe au moins 46 s sans relâcher | `{"duration_ms": 46000+}` |
 | coordinate | Atlas changé en pierre par Persée et la Méduse : le **Haut Atlas**, Toubkal (≈ 31.06° N, 7.92° O). Saisie directe : `31.06, -7.92` | `{"lat": 31.06, "lng": -7.92}` (± tolérance serveur) |
 | console | `atlas.lift('lumière')` : « Toute ombre naît d'une lumière » | `{"answer": "lumière"}` |
 | overscroll | En bas de page, pousser au moins 3 fois, pour 800 px cumulés | `{"pushes": 3+, "distance_px": 800+}` |
@@ -71,6 +71,8 @@ Chaque page envoie `page_view`, puis `hint_seen` (l'indice entre dans le viewpor
 </details>
 
 ## Configuration serveur
+
+Noms neutres : les pages (`p/03.html`…), les scripts (`assets/js/m/03.js`…) et les identifiants JS/CSS sont volontairement peu parlants (voir `DECISIONS.md`). Correspondance : 03 letters, 04 longpress, 05 coordinate, 06 console, 10 overscroll.
 
 Correspondance des glyphes de `letters` (documentée uniquement ici, jamais dans le code) :
 
@@ -89,7 +91,7 @@ Correspondance des glyphes de `letters` (documentée uniquement ici, jamais dans
 
 Séquence attendue par le serveur : `g3,g7,g1,g9,g4`.
 
-Autres seuils à régler côté serveur : `longpress` ≥ 5000 ms (le front envoie la durée mesurée, environ 5000 à 5050 ms) ; `overscroll` ≥ 3 poussées et ≥ 800 px ; `coordinate`, tolérance de distance autour de la cible.
+Autres seuils à régler côté serveur : `longpress` : seuil serveur à aligner sur `T` dans `assets/js/m/04.js` (46000 ms actuellement ; le front envoie la durée mesurée, environ `T` à `T` + 50 ms) ; `overscroll` ≥ 3 poussées et ≥ 800 px ; `coordinate`, tolérance de distance autour de la cible.
 
 ### CORS et origines
 

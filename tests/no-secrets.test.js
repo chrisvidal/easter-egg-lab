@@ -13,7 +13,7 @@ function walk(path) {
 }
 
 test('aucune réponse ni cible secrète dans le front', () => {
-  const files = ['assets', 'eggs', 'index.html'].flatMap((entry) => walk(join(ROOT, entry)));
+  const files = ['assets', 'p', 'index.html'].flatMap((entry) => walk(join(ROOT, entry)));
   assert.ok(files.length > 10, 'les fichiers du front sont bien parcourus');
   const hits = [];
   for (const file of files) {
