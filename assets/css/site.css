@@ -7,6 +7,7 @@
   --blanc-doux: rgba(236, 232, 225, 0.74);
   --blanc-pale: rgba(236, 232, 225, 0.46);
   --trait: rgba(236, 232, 225, 0.14);
+  --veille: #d9b46a;
   --serif: "Cormorant Garamond", Garamond, "Times New Roman", serif;
   --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --mono: ui-monospace, Menlo, Consolas, monospace;
@@ -304,6 +305,7 @@ a {
 [data-k] {
   font-weight: 500;
   color: inherit;
+  color: color-mix(in srgb, currentColor 70%, var(--veille));
   border-radius: 2px;
   cursor: pointer;
   transition:
