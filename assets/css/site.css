@@ -305,7 +305,7 @@ a {
 [data-k] {
   font-weight: 500;
   color: inherit;
-  color: color-mix(in srgb, currentColor 70%, var(--veille));
+  color: color-mix(in srgb, currentColor 60%, var(--veille));
   border-radius: 2px;
   cursor: pointer;
   transition:
